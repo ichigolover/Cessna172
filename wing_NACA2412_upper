@@ -17,6 +17,6 @@ chord_conversion = 1.63/1.5 #points의 좌표가 1.5m기준이므로 변환
 
 # ✅ 좌표 입력 (AutoCAD에 점 추가)
 for x, y in points:
-    acad.model.AddPoint(APoint(x, y*chord_conversion))
+    acad.model.AddPoint(APoint(x*chord_conversion, y*chord_conversion))
 
 print("✅ NACA 2412 좌표 AutoCAD에 입력 완료!")
