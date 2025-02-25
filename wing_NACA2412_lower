@@ -1,0 +1,22 @@
+# python source code로 저장 후 cmd에서 파일 실행
+
+from pyautocad import Autocad, APoint
+
+# ✅ AutoCAD와 연결
+acad = Autocad(create_if_not_exists=True)
+
+# ✅ NACA 2412 좌표 (Root Chord = 1.5m 적용)
+points = [
+    (0.0000, 0.0000), (0.0375, 0.0518), (0.0750, 0.0873),
+    (0.1500, 0.1269), (0.3000, 0.1806), (0.4500, 0.2117),
+    (0.7500, 0.2269), (1.0500, 0.1899), (1.3500, 0.0954),
+    (1.5000, 0.0000)
+]
+
+chord_conversion = 1.63/1.5
+
+# ✅ 좌표 입력 (AutoCAD에 점 추가)
+for x, y in points:
+    acad.model.AddPoint(APoint(x, y*chord_conversion))
+
+print("✅ NACA 2412 좌표 AutoCAD에 입력 완료!")
