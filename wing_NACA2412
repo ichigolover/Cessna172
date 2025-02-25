@@ -1,23 +1,20 @@
-import numpy as np
-import csv
+# python source code로 저장 후 cmd에서 파일 실행
 
-# 📌 기본 NACA 2412 좌표 (Chord = 1 기준)
-naca_2412_coords = np.array([
-    [0.0000, 0.0000], [0.0250, 0.0345], [0.0500, 0.0582], 
-    [0.1000, 0.0846], [0.2000, 0.1204], [0.3000, 0.1411], 
-    [0.5000, 0.1513], [0.7000, 0.1266], [0.9000, 0.0636], 
-    [1.0000, 0.0000]
-])
+from pyautocad import Autocad, APoint
 
-# ✅ 변환할 Chord 길이 설정 (예: Root Chord = 1.5m)
-chord_length = 1.5
-scaled_coords = naca_2412_coords * chord_length
+# ✅ AutoCAD와 연결
+acad = Autocad(create_if_not_exists=True)
 
-# 📌 CSV 파일로 저장
-csv_filename = "naca_2412_scaled.csv"
-with open(csv_filename, mode="w", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow(["X", "Y"])  # 헤더 추가
-    writer.writerows(scaled_coords)
+# ✅ NACA 2412 좌표 (Root Chord = 1.5m 적용)
+points = [
+    (0.0000, 0.0000), (0.0375, 0.0518), (0.0750, 0.0873),
+    (0.1500, 0.1269), (0.3000, 0.1806), (0.4500, 0.2117),
+    (0.7500, 0.2269), (1.0500, 0.1899), (1.3500, 0.0954),
+    (1.5000, 0.0000)
+]
 
-print(f"✅ CSV 파일 저장 완료: {csv_filename}")
+# ✅ 좌표 입력 (AutoCAD에 점 추가)
+for x, y in points:
+    acad.model.AddPoint(APoint(x, y))
+
+print("✅ NACA 2412 좌표 AutoCAD에 입력 완료!")
